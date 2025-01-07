@@ -3,7 +3,7 @@
 
 void euler_method(double x0, double xn, double x_init, double y_init, double h, double* y_theory, double* y_sim, double* x_vals, int num_points) {
 	// Finding integration constant
-	double integralconst(double x, double y) {
+    double integralconst(double x, double y) {
 		return y*(1+pow(x, 2)) - atan(x);
 	}
 
