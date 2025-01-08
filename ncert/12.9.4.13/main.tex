@@ -108,8 +108,14 @@ Trapezoidal rule,
 
 Discretization using trapezoidal rule, integrate $f(x)=cos^{-1}a$ from $x_{n}$ to $x_{n+1}$,
 \begin{align}
-    y_{n+1}-y_{n} &\approx \frac{h}{2}\brak{f\brak{x_{n}}+f\brak{x_{n+1}}} \\
-    y_{n+1} &\approx y_{n} + \frac{h}{2}\brak{\cos^{-1}a + \cos^{-1}a}
+    y_{n+1}-y_{n} &\approx \frac{h}{2}\brak{f\brak{x_{n}}+f\brak{x_{n+1}}}
+\end{align}
+    
+We can write $f(x_{n+1})$ in terms of $f(x_n)$ using first principle of derivative. $f(x_{n+1})=f(x_n)+hf^{\prime}(x_n)$
+\begin{align}
+	y_{n+1}-y_{n} &\approx \frac{h}{2}\brak{f\brak{x_{n}}+f\brak{x_{n+1}}} \\
+	y_{n+1}-y_{n} &\approx \frac{h}{2}\brak{2f\brak{x_{n}}+hf^\prime\brak{x_{n}}} \\
+    y_{n+1} &\approx y_{n} + h\cos^{-1}a + \frac{h^2}{2}(0)
 \end{align}
 
 Difference equation,
