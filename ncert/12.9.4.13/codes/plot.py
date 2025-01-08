@@ -3,43 +3,50 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Loading the shared library
-euler = ctypes.CDLL('./euler.so')
+trapezoidal = ctypes.CDLL('./trapezoidal.so')
 
 # Defining arguments and return types of the C function
-euler.euler_method.argtypes = [
-    ctypes.c_double,   # y0
-    ctypes.c_double,   # yn
-    ctypes.c_double,   # h
-    ctypes.POINTER(ctypes.c_double),  # x_given
-    ctypes.POINTER(ctypes.c_double),  # x_approx
-    ctypes.POINTER(ctypes.c_double),  # y_values
+trapezoidal.trapezoidal_rule.argtypes = [
+    ctypes.c_double,	# x0
+    ctypes.c_double,	# xn
+    ctypes.c_double,	# a
+    ctypes.c_double,	# x_init
+    ctypes.c_double,	# y_init
+    ctypes.c_double,	# h
+    ctypes.POINTER(ctypes.c_double),  # y_theory
+    ctypes.POINTER(ctypes.c_double),  # y_sim
+    ctypes.POINTER(ctypes.c_double),  # x_vals
     ctypes.c_int       # num_points
 ]
 
 # Parameters
-y0 = -4.0
-yn = 4.0
+x0 = -2.0
+xn = 2.0
+a = 0.5
+x_init = 0.0
+y_init = 1.0
 h = 0.01
-num_points = int((yn - y0) / h) + 1
+num_points = int((xn - x0) / h)
 
 # Memory allocation for arrays
-x_theory = (ctypes.c_double * num_points)()
-x_approx = (ctypes.c_double * num_points)()
-y_values = (ctypes.c_double * num_points)()
+y_theory = (ctypes.c_double * num_points)()
+y_sim = (ctypes.c_double * num_points)()
+x_vals = (ctypes.c_double * num_points)()
 
 # Calling the C function
-euler.euler_method(y0, yn, h, x_theory, x_approx, y_values, num_points)
+trapezoidal.trapezoidal_rule(x0, xn, a, x_init, y_init, h, y_theory, y_sim, x_vals, num_points)
 
 # Convert results to NumPy arrays for easier plotting
-x_theory = np.array(x_theory)
-x_approx = np.array(x_approx)
-y_values = np.array(y_values)
+y_theory = np.array(y_theory)
+y_sim = np.array(y_sim)
+x_vals = np.array(x_vals)
 
 # Plot the results
-plt.plot(x_theory, y_values, label='theory')
-plt.plot(x_approx, y_values, linestyle=':', color = 'r', label="sim")
+plt.plot(x_vals, y_theory, label='theory')
+plt.plot(x_vals, y_sim, linestyle=':', color = 'r', label="sim")
 plt.xlabel('x')
 plt.ylabel('y')
+plt.axis('equal')
 plt.legend()
 plt.grid()
 plt.savefig("../figs/plot.png")
