@@ -84,7 +84,22 @@ The roots are,
     &= 2-\sqrt{2}i
 \end{align}
 
-Computational solution (Newton-Raphson iterative method):
+Computational solution:
+
+(1) Eigenvalues of Companion Matrix:
+
+The roots of a polynomial equation $x^n+b_{n-1}x^{n-1}+\dots+b_2x^2+b_1x+b_0 = 0$ is given by finding eigenvalues of the companion matrix \brak{C}.
+\begin{align}
+    C = \myvec{0&1&0&\dots&0\\ 0&0&1&\dots&0\\ \vdots &\vdots &\vdots &\ddots&\vdots\\0&0&0&\vdots&1\\-b_0&-b_1&-b_2&\dots&-b_{n-1}}
+\end{align}
+
+The solution given by the code is,
+\begin{align}
+    x_1 &= 2.00000000+1.41421356i \\
+    x_2 &= 2.00000000-1.41421356j
+\end{align}
+
+(2) Newton-Raphson iterative method:
 \begin{align}
     f\brak{x} &= x^2 - 4x + 6 \\
     f^\prime\brak{x} &= 2x - 4
