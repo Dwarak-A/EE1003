@@ -1,0 +1,12 @@
+\beamer@sectionintoc {2}{Problem Statement}{3}{0}{1}
+\beamer@sectionintoc {3}{Theoretical Solution}{4}{0}{2}
+\beamer@subsectionintoc {3}{1}{Function and its Derivatives}{4}{0}{2}
+\beamer@subsectionintoc {3}{2}{Critical Points}{5}{0}{2}
+\beamer@subsectionintoc {3}{3}{Minima, Maxima Condition}{6}{0}{2}
+\beamer@subsectionintoc {3}{4}{Minimum, Maximum Values}{7}{0}{2}
+\beamer@sectionintoc {4}{Computational Solution}{8}{0}{3}
+\beamer@subsectionintoc {4}{1}{Gradient Descent and Ascent}{8}{0}{3}
+\beamer@subsectionintoc {4}{2}{Parameters and Results}{9}{0}{3}
+\beamer@sectionintoc {5}{C Code}{10}{0}{4}
+\beamer@sectionintoc {6}{Python Code}{12}{0}{5}
+\beamer@sectionintoc {7}{Plot}{18}{0}{6}
