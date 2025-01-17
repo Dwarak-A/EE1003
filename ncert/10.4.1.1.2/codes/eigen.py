@@ -185,8 +185,8 @@ b = -4
 c = 6
 
 A = [
-    [0, -c],
-    [1, -b]
+    [0, 1],
+    [-c, -b]
     ]
     
 eigenvalues = compute_eigenvalues(A)
