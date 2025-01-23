@@ -95,23 +95,6 @@ $l$ is the multiplier used to zero out $a_{21}$ in $A$:
 \end{align}
 \end{frame}
 
-\subsection{Update Equations}
-\begin{frame}
-\frametitle{Update Equations}
-This $LU$ decomposition could also be computationally found using Doolittle's algorithm. The update equations are given by:
-\begin{align}
-    U_{ij} &= \begin{cases}
-        A_{ij} & \quad i = 0\\
-        A_{ij} - \sum_{k = 0}^{i - 1} L_{ik} U_{kj} & \quad i > 0
-    \end{cases}\\
-    L_{ij} &= \begin{cases}
-        \frac{A_{ij}}{U_{jj}} & \quad j = 0, U_{jj} \neq 0\\
-        \frac{A_{ij} - \sum_{k = 0}^{j - 1} L_{ik} U_{kj}}{U_{jj}} & \quad j > 0
-    \end{cases}
-\end{align}
-\end{frame}
-
-
 \subsection{Forward and Back Substitution}
 \begin{frame}
 \frametitle{Two-Step Solution Process}
@@ -137,6 +120,22 @@ To solve $U\vec{x} = \vec{y}$, use back substitution:
 \begin{align}
     \myvec{9 & -10\\ 0 & \frac{47}{9}}\myvec{x_1 \\ x_2} &= \myvec{-12 \\ \frac{47}{3}}\\
     \myvec{x_1 \\ x_2} &= \myvec{2 \\ 3}
+\end{align}
+\end{frame}
+
+\subsection{Update Equations}
+\begin{frame}
+\frametitle{Update Equations}
+This $LU$ decomposition could also be computationally found using Doolittle's algorithm. The update equations are given by:
+\begin{align}
+    U_{ij} &= \begin{cases}
+        A_{ij} & \quad i = 0\\
+        A_{ij} - \sum_{k = 0}^{i - 1} L_{ik} U_{kj} & \quad i > 0
+    \end{cases}\\
+    L_{ij} &= \begin{cases}
+        \frac{A_{ij}}{U_{jj}} & \quad j = 0, U_{jj} \neq 0\\
+        \frac{A_{ij} - \sum_{k = 0}^{j - 1} L_{ik} U_{kj}}{U_{jj}} & \quad j > 0
+    \end{cases}
 \end{align}
 \end{frame}
 

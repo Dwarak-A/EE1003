@@ -24,19 +24,19 @@
 \headcommand {\slideentry {3}{2}{2}{6/6}{LU Decomposition}{0}}
 \headcommand {\beamer@framepages {6}{6}}
 \headcommand {\beamer@subsectionpages {5}{6}}
-\headcommand {\beamer@subsectionentry {0}{3}{3}{7}{Update Equations}}
-\headcommand {\slideentry {3}{3}{1}{7/7}{Update Equations}{0}}
+\headcommand {\beamer@subsectionentry {0}{3}{3}{7}{Forward and Back Substitution}}
+\headcommand {\slideentry {3}{3}{1}{7/7}{Forward and Back Substitution}{0}}
 \headcommand {\beamer@framepages {7}{7}}
-\headcommand {\beamer@subsectionpages {7}{7}}
-\headcommand {\beamer@subsectionentry {0}{3}{4}{8}{Forward and Back Substitution}}
-\headcommand {\slideentry {3}{4}{1}{8/8}{Forward and Back Substitution}{0}}
+\headcommand {\slideentry {3}{3}{2}{8/8}{Forward and Back Substitution}{0}}
 \headcommand {\beamer@framepages {8}{8}}
-\headcommand {\slideentry {3}{4}{2}{9/9}{Forward and Back Substitution}{0}}
+\headcommand {\slideentry {3}{3}{3}{9/9}{Forward and Back Substitution}{0}}
 \headcommand {\beamer@framepages {9}{9}}
-\headcommand {\slideentry {3}{4}{3}{10/10}{Forward and Back Substitution}{0}}
+\headcommand {\beamer@subsectionpages {7}{9}}
+\headcommand {\beamer@subsectionentry {0}{3}{4}{10}{Update Equations}}
+\headcommand {\slideentry {3}{4}{1}{10/10}{Update Equations}{0}}
 \headcommand {\beamer@framepages {10}{10}}
 \headcommand {\beamer@sectionpages {4}{10}}
-\headcommand {\beamer@subsectionpages {8}{10}}
+\headcommand {\beamer@subsectionpages {10}{10}}
 \headcommand {\sectionentry {4}{Visualization}{11}{Visualization}{0}}
 \headcommand {\slideentry {4}{0}{1}{11/11}{}{0}}
 \headcommand {\beamer@framepages {11}{11}}
