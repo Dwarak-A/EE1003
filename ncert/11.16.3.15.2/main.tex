@@ -1,0 +1,119 @@
+\let\negmedspace\undefined
+\let\negthickspace\undefined
+\documentclass[journal]{IEEEtran}
+\usepackage[a5paper, margin=10mm, onecolumn]{geometry}
+%\usepackage{lmodern} % Ensure lmodern is loaded for pdflatex
+\usepackage{tfrupee} % Include tfrupee package
+
+\setlength{\headheight}{1cm} % Set the height of the header box
+\setlength{\headsep}{0mm}     % Set the distance between the header box and the top of the text
+
+\usepackage{gvv-book}
+\usepackage{gvv}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{txfonts}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{comment}
+\usepackage[breaklinks=true]{hyperref}
+\usepackage{tkz-euclide} 
+\usepackage{listings}
+% \usepackage{gvv}                                        
+\def\inputGnumericTable{}                                 
+\usepackage[latin1]{inputenc}                                
+\usepackage{color}                                            
+\usepackage{array}                                            
+\usepackage{longtable}                                       
+\usepackage{calc}                                             
+\usepackage{multirow}                                         
+\usepackage{hhline}                                           
+\usepackage{ifthen}                                           
+\usepackage{lscape}
+\begin{document}
+
+\bibliographystyle{IEEEtran}
+\vspace{3cm}
+
+\title{11.16.3.15.2}
+\author{EE24BTECH11019 - Dwarak A}
+% \maketitle
+% \newpage
+% \bigskip
+{\let\newpage\relax\maketitle}
+
+\renewcommand{\thefigure}{\theenumi}
+\renewcommand{\thetable}{\theenumi}
+\setlength{\intextsep}{10pt} % Space between text and floats
+
+
+\numberwithin{equation}{enumi}
+\numberwithin{figure}{enumi}
+\renewcommand{\thetable}{\theenumi}
+
+\textbf{Question:}
+
+If $A$ and $B$ are events such that
+\begin{align}
+    P(A) &= \frac{1}{4} \\
+    P(B) &= \frac{1}{2} \\
+    P(A \land B) &= \frac{1}{8}
+\end{align}
+Find
+\begin{align}
+    p(\neg A \land \neg B)
+\end{align}
+
+\solution
+
+Define a random variable $X$ that takes on four possible values corresponding to the four outcomes:
+\begin{align}
+    X =
+    \begin{cases}
+        1, & \text{if only } A \text{ occurs} \\
+        2, & \text{if only } B \text{ occurs} \\
+        3, & \text{if both } A \text{ and } B \text{ occur} \\
+        4, & \text{if neither } A \text{ nor } B \text{ occur}
+    \end{cases}
+\end{align}
+
+Calculating probabilities of the $4$ outcomes of $X$:
+
+\begin{align}
+    P(X = 1) &= P(A \land \neg B) = P(A) - P(A \land B) = \frac{1}{4} - \frac{1}{8} = \frac{1}{8} \\
+    P(X = 2) &= P(\neg A \land B) = P(B) - P(A \land B) = \frac{1}{2} - \frac{1}{8} = \frac{3}{8} \\
+    P(X = 3) &= P(A \land B) = \frac{1}{8} \\
+    P(X = 4) &= P(\neg A \land \neg B) = 1 - P(A \lor B) \label{eqn:9}\\
+    P(A \lor B) &= P(A) + P(B) - P(A \land B) \\
+    P(A \lor B) &= \frac{1}{4} + \frac{1}{2} - \frac{1}{8} = \frac{5}{8} \label{eqn:11}
+\end{align}
+
+Using \eqref{eqn:9} and \eqref{eqn:11}:
+\begin{align}
+    P(X = 4) = P(\neg A \land \neg B) = 1 - \frac{5}{8} = \frac{3}{8}
+\end{align}
+
+Thus, the Probability Mass Function (PMF) for $X$ is:
+
+\begin{align}
+    p_X(x) =
+    \begin{cases}
+        \frac{1}{8}, & \text{if } x = 1 \\
+        \frac{3}{8}, & \text{if } x = 2 \\
+        \frac{1}{8}, & \text{if } x = 3 \\
+        \frac{3}{8}, & \text{if } x = 4
+        \end{cases}
+\end{align}
+
+$P(\neg A \land \neg B)$ corresponds to $P(X = 4)$
+\begin{align}
+    P(\neg A \land \neg B) = P(X = 4) = \frac{3}{8}.
+\end{align}
+
+\end{document}
