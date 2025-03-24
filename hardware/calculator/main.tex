@@ -1,0 +1,258 @@
+\documentclass[a4paper,12pt]{article}
+
+% Packages
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{tocloft}
+\usepackage{hyperref} % Load hyperref after other packages
+\usepackage{float}    % Enables [H] float option
+
+\title{Scientific Calculator using Arduino}
+\author{Dwarak A - EE24BTECH11019}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This report details the design and implementation of a scientific calculator using an Arduino board, a 16x2 LCD display, and a button matrix. The calculator performs complex mathematical operations such as trigonometry, logarithms, and exponentiation by employing advanced numerical methods like the \textbf{CORDIC algorithm} for trigonometric functions and the \textbf{Runge-Kutta 4th Order Method (RK4)} for logarithmic and exponential computations.
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction}
+Scientific calculators are indispensable tools for executing intricate mathematical operations. This project implements a scientific calculator based on the Arduino platform, featuring a 16x2 LCD display and a button matrix for user input. Advanced numerical techniques—namely, the \textbf{CORDIC algorithm} and the \textbf{RK4 method}—are utilized to ensure both accuracy and efficiency in computing trigonometric and logarithmic functions.
+
+\section{Hardware Setup}
+\subsection{Components Required}
+The following table lists the components used in this project.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Component} & \textbf{Quantity} \\
+        \hline
+        Arduino Board & 1 \\
+        16x2 LCD Display (Non-I2C) & 1 \\
+        Button Matrix (4x5) & 1 \\
+        Shift Button & 1 \\
+        Resistors (various) & As required \\
+        Jumper Wires & As required \\
+        Breadboard/PCB & 1 \\
+        \hline
+    \end{tabular}
+    \caption{List of Required Components}
+    \label{tab:components}
+\end{table}
+
+\subsection{Circuit Connections}
+
+\subsubsection{Button Matrix Connections}
+The button matrix is wired as shown in Table~\ref{tab:matrix}, with rows and columns assigned to specific Arduino pins.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Function} & \textbf{Arduino Pin} \\
+        \hline
+        Row 1 & 2 \\
+        Row 2 & 3 \\
+        Row 3 & 4 \\
+        Row 4 & 5 \\
+        Column 1 & 6 \\
+        Column 2 & 7 \\
+        Column 3 & 8 \\
+        Column 4 & 9 \\
+        Column 5 & 10 \\
+        \hline
+    \end{tabular}
+    \caption{Button Matrix Connections}
+    \label{tab:matrix}
+\end{table}
+
+\subsubsection{Shift Button Connections}
+The shift button, used to toggle advanced functions, is connected as detailed in Table~\ref{tab:shift}.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Component} & \textbf{Arduino Pin} \\
+        \hline
+        Shift Button & 13 \\
+        GND & GND \\
+        \hline
+    \end{tabular}
+    \caption{Shift Button Connection}
+    \label{tab:shift}
+\end{table}
+
+\subsubsection{LCD Display Connections}
+The LCD is operated in 4-bit mode. Table~\ref{tab:lcd} shows the connections for the LCD signals.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{LCD Signal} & \textbf{Arduino Pin} \\
+        \hline
+        RS & A0 \\
+        EN & A1 \\
+        D4 & A2 \\
+        D5 & A3 \\
+        D6 & A4 \\
+        D7 & A5 \\
+        \hline
+    \end{tabular}
+    \caption{LCD Display Connections}
+    \label{tab:lcd}
+\end{table}
+
+\subsection{LCD Pin Functionality}
+The 16x2 LCD display uses the following pins:
+\begin{itemize}
+    \item \textbf{RS (Register Select):} Determines whether data is interpreted as command (LOW) or character data (HIGH).
+    \item \textbf{EN (Enable):} Acts as a latch for data; toggling thi pin captures the data on the D4–D7 lines.
+    \item \textbf{D4–D7:} These pins transfer the 4-bit data for commands and character display.
+\end{itemize}
+
+\section{Functions Available}
+The calculator supports a variety of operations across two modes of input.
+
+\subsection{Normal Mode Button Layout}
+The normal mode layout (Table~\ref{tab:normal}) facilitates entry of numbers and basic arithmetic operations.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        1 & 2 & 3 & / & C \\
+        \hline
+        4 & 5 & 6 & * & D \\
+        \hline
+        7 & 8 & 9 & - & ( \\
+        \hline
+        . & 0 & = & + & ) \\
+        \hline
+    \end{tabular}
+    \caption{Normal Mode Button Layout}
+    \label{tab:normal}
+\end{table}
+
+\subsection{Shift Mode Button Layout}
+The shift mode (Table~\ref{tab:shift}) provides access to advanced functions.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        $\sin$ & $\cos$ & $\tan$ & $x^y$ & C \\
+        \hline
+        ! & $\pi$ & $e$ & $|x|$ & D \\
+        \hline
+        log & ln & sqrt & cbrt & r \\
+        \hline
+        $sin^{-1}$ & $cos^{-1}$ & $tan^{-1}$ & $x^2$ & $x^3$ \\
+        \hline
+    \end{tabular}
+    \caption{Shift Mode Button Layout}
+    \label{tab:shift}
+\end{table}
+
+\newpage
+
+\section{Numerical Methods}
+The calculator utilizes two powerful numerical methods to ensure accurate computations.
+
+\subsection{CORDIC Algorithm for Trigonometric Functions}
+The CORDIC algorithm (COordinate Rotation DIgital Computer) computes trigonometric functions efficiently without relying on floating-point arithmetic.
+
+\subsubsection{CORDIC Equations}
+\[
+x_{i+1} = x_i - d_i \cdot y_i \cdot 2^{-i}
+\]
+\[
+y_{i+1} = y_i + d_i \cdot x_i \cdot 2^{-i}
+\]
+\[
+z_{i+1} = z_i - d_i \cdot \arctan(2^{-i})
+\]
+where:
+\begin{itemize}
+    \item \(x\) and \(y\) represent the vector components.
+    \item \(z\) is the angle.
+    \item \(d_i\) is the sign of \(z\).
+\end{itemize}
+
+\subsubsection{Applications}
+This algorithm is used to compute $\sin(x)$, $\cos(x)$, and $\tan(x)$.
+
+\subsection{Runge-Kutta 4th Order Method (RK4)}
+The RK4 method is applied to solve differential equations for evaluating logarithmic and exponential functions.
+
+\subsubsection{RK4 Equations}
+\[
+k_1 = h\,f(x_n, y_n)
+\]
+\[
+k_2 = h\,f\left(x_n + \frac{h}{2}, y_n + \frac{k_1}{2}\right)
+\]
+\[
+k_3 = h\,f\left(x_n + \frac{h}{2}, y_n + \frac{k_2}{2}\right)
+\]
+\[
+k_4 = h\,f(x_n + h, y_n + k_3)
+\]
+\[
+y_{n+1} = y_n + \frac{1}{6}(k_1 + 2k_2 + 2k_3 + k_4)
+\]
+
+\subsubsection{Applications}
+RK4 is used for computing $\ln(x)$, $\log_{10}(x)$, power functions \( x^n \), square/cube roots, and inverse trigonometric functions.
+
+\section{Expression Evaluation Logic}
+The calculator parses and evaluates complex expressions using:
+\begin{itemize}
+    \item \textbf{Stack-based computation:} Two stacks are maintained for operators and operands.
+    \item \textbf{Operator precedence:} Properly enforced to ensure correct evaluation order.
+    \item \textbf{String parsing:} For extracting numbers, operators, and function identifiers.
+    \item \textbf{Error handling:} To manage cases such as division by zero or invalid inputs.
+\end{itemize}
+
+\section{Implementation Challenges and Solutions}
+Key challenges and their resolutions include:
+\begin{itemize}
+    \item \textbf{Button Multiplexing:} Limited Arduino pins required an efficient multiplexing technique to read the button matrix.
+    \item \textbf{LCD Operation:} The 4-bit mode conserves pins while maintaining functionality.
+    \item \textbf{Efficient Computation:} The use of CORDIC and RK4 algorithms ensures both speed and accuracy.
+\end{itemize}
+
+\section{Source Code}
+For full access to the project source code, please refer to the following URL:
+\begin{center}
+\url{https://github.com/Dwarak-A/EE1003/blob/main/hardware/calculator}
+\end{center}
+
+\section{Conclusion}
+This scientific calculator demonstrates the successful integration of advanced numerical methods and efficient hardware interfacing on the Arduino platform. The combination of the CORDIC and RK4 algorithms delivers fast and accurate computations, while the intuitive button matrix ensures ease of use.
+
+\begin{center}
+Thank you
+\end{center}
+
+\end{document}s
