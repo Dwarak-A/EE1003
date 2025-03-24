@@ -1,0 +1,116 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{tocloft}
+\usepackage{hyperref} % Load hyperref near the end
+
+\title{Arduino-Based Digital Clock with Timer Mode}
+\author{Dwarak A - EE24BTECH11019}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This report describes the design and implementation of an Arduino-based digital clock with an integrated timer mode. The system utilizes a 7447 BCD to 7-segment decoder with common anode (active low) 7-segment displays and button-based controls for time adjustments. Timekeeping is managed via a timer interrupt, while the display is driven using multiplexing to handle six digits representing hours, minutes, and seconds.
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction}
+Digital clocks play a crucial role in embedded systems. This project implements an Arduino-based clock that displays time in hours, minutes, and seconds while providing a countdown timer mode. Key features include the use of a 7447 BCD to 7-segment decoder (designed for common anode displays, meaning the segment outputs are active low), multiplexed display control, and several pushbuttons for user interaction.
+
+\section{Hardware Setup}
+\subsection{Components Required}
+% The table file "tables/table1.tex" should contain your components table.
+\input{tables/table1.tex}
+\newpage
+
+\subsection{Basic Connections}
+
+\subsubsection{BCD Outputs to 7447 Decoder}
+The Arduino outputs BCD values on digital pins PD2--PD5, which are fed into the 7447 decoder. Since the displays are common anode, the decoder outputs are active low. The connections are shown in Table~\ref{tab:7447}.
+\input{tables/table2.tex}
+
+\subsubsection{Multiplexed 7-Segment Displays}
+To display six digits using limited Arduino pins, multiplexing is employed. The Arduino sequentially activates each digit by driving its enable pin. The digit connections are listed in Table~\ref{tab:multiplex}.
+\input{tables/table3.tex}
+
+\subsubsection{Pushbutton Connections}
+The pushbuttons, connected using the Arduino's internal pull-up resistors, pull the corresponding input LOW when pressed. Their connections are given in Table~\ref{tab:buttons}.
+\input{tables/table4.tex}
+
+\section{Arduino to AVR Pin Mapping}
+The following table shows how the Arduino board’s pin labels correspond to the AVR microcontroller’s port names as referenced in AVR GCC. This mapping is essential for low-level programming and direct port manipulation.
+\input{tables/table5.tex}
+
+\section{IC and Display Pinouts}
+\subsection{7-Segment Display Pinout}
+\begin{center}
+\input{figs/7seg.tex}
+\captionof{figure}{7-Segment Display Pinout (Common Anode, Active Low)}
+\label{fig:7seg}
+\end{center}
+
+\subsection{7447 Decoder Pinout}
+Below is the placeholder for your TikZ picture for the 7447 decoder pinout. Replace the placeholder comment with your TikZ code or use an external PNG image as needed.
+\begin{figure}[h]
+    \centering
+    % Uncomment one of the following based on your preference:
+    
+    % If you have a TikZ file:
+    %\input{figs/7447.tex}
+    
+    % Or, if you prefer a PNG image:
+    \includegraphics[width=0.8\textwidth]{figs/7447_pinout.png}
+    
+    \caption{7447 IC Pinout Diagram}
+    \label{fig:7447_pinout}
+\end{figure}
+
+\section{Multiplexing Explanation}
+Multiplexing is employed to drive multiple 7-segment displays using a limited number of Arduino pins. The process is as follows:
+\begin{enumerate}
+    \item The Arduino sets the BCD outputs (PD2--PD5) to the binary value corresponding to the digit to be displayed.
+    \item It then activates the corresponding digit enable pin (one of pins 6--11) for a brief period (on the order of $10^{-3}$ seconds).
+    \item The digit is then deactivated, and the Arduino moves to the next digit.
+\end{enumerate}
+This rapid cycling (typically at least 50 Hz per digit) creates the illusion of all digits being lit simultaneously, due to the persistence of vision.
+
+\section{Timekeeping withTimer Interrupt}
+The Arduino utilizes Timer0 to generate an interrupt every 1 ms. This interrupt increments a global millisecond counter. When the counter reaches 1000, indicating one second has elapsed, the following steps occur:
+\begin{itemize}
+    \item The seconds value is incremented.
+    \item When seconds reach 60, they reset to 0 and the minutes counter is incremented.
+    \item Similarly, when minutes reach 60, the hours counter is incremented.
+    \item When hours reach 24, the clock resets to 00:00:00.
+\end{itemize}
+
+\section{Button Functions}
+\subsection{Increment Buttons (A0--A2)}
+\begin{itemize}
+    \item \textbf{Short press}: Increments the corresponding time unit (hour, minute, or second).
+    \item \textbf{Long press (after 2 seconds)}: Initiates continuous incrementing at a rate of one increment every 200 ms.
+\end{itemize}
+
+\subsection{Pause/Play Button (A3)}
+\begin{itemize}
+    \item \textbf{Short press}: Toggles between pause and play states.
+    \item \textbf{Long press (after 5 seconds)}: Resets the active mode's time to 00:00:00 and pauses the clock.
+\end{itemize}
+
+\subsection{Clock/Timer Mode Toggle (A5)}
+Pressing the mode toggle button switches between clock mode (count-up) and timer mode (count-down) without losing the stored time for either mode.
+
+\section{Conclusion}
+This project demonstrates the implementation of an Arduino-based digital clock featuring a timer mode. By utilizing a 7447 BCD to 7-segment decoder with common anode displays (active low) and employing multiplexing, the design efficiently drives a six-digit display. The use of timer interrupts ensures accurate timekeeping, and the system allows user interaction through multiple pushbuttons.
+
+\end{document}
+ 

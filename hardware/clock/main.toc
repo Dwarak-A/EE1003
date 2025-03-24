@@ -1,0 +1,18 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {section}{\numberline {2}Hardware Setup}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Components Required}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Basic Connections}{4}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}BCD Outputs to 7447 Decoder}{4}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Multiplexed 7-Segment Displays}{4}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Pushbutton Connections}{4}{subsubsection.2.2.3}%
+\contentsline {section}{\numberline {3}Arduino to AVR Pin Mapping}{5}{section.3}%
+\contentsline {section}{\numberline {4}IC and Display Pinouts}{6}{section.4}%
+\contentsline {subsection}{\numberline {4.1}7-Segment Display Pinout}{6}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}7447 Decoder Pinout}{6}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Multiplexing Explanation}{6}{section.5}%
+\contentsline {section}{\numberline {6}Timekeeping withTimer Interrupt}{7}{section.6}%
+\contentsline {section}{\numberline {7}Button Functions}{8}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Increment Buttons (A0--A2)}{8}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Pause/Play Button (A3)}{8}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Clock/Timer Mode Toggle (A5)}{8}{subsection.7.3}%
+\contentsline {section}{\numberline {8}Conclusion}{8}{section.8}%
